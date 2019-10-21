@@ -2,6 +2,7 @@ package org.arthur.camposcosta.marbles.main;
 
 import java.util.Scanner;
 
+import org.arthur.camposcosta.marbles.main.utils.ScannerUtils;
 import org.arthur.camposcosta.marbles.service.MarblesCountService;
 import org.arthur.camposcosta.marbles.service.impl.MarblesCountServiceImpl;
 import org.arthur.camposcosta.marbles.service.impl.MarblesCountServiceJava8Impl;
@@ -15,7 +16,7 @@ public class MarblesMain {
 
 	/**
 	 * Main method of the project that showcase the application usage
-	 * @param args
+	 * @param args args
 	 */
 	public static void main(String[] args) {
 		
@@ -42,7 +43,7 @@ public class MarblesMain {
 	 * @return the number of boxes inputed by the user
 	 */
 	private static int askBoxCount(Scanner sc) {
-		return checkNumberInput(sc, "input number of boxes (positive number) : ");
+		return ScannerUtils.checkNumberInput(sc, "input number of boxes (positive number) : ");
 	}
 	
 	/**
@@ -55,29 +56,10 @@ public class MarblesMain {
 		int[] marbleBoxes = new int[boxCount];
 		if (boxCount > 0) {
 			for (int i = 0; i < boxCount; i++) {
-				marbleBoxes[i] = checkNumberInput(sc, "input number of marbles in box " + (i + 1) + " (positive number) : ");
+				marbleBoxes[i] = ScannerUtils.checkNumberInput(sc, "input number of marbles in box " + (i + 1) + " (positive number) : ");
 			}
 		}
 		
 		return marbleBoxes;
-	}
-	
-	/**
-	 * Checks if the user input is an int >= 0
-	 * @param sc
-	 * @return
-	 */
-	private static int checkNumberInput(Scanner sc, String message) {
-		int input;
-		System.out.print(message);
-		
-		do {
-			while (!sc.hasNextInt()) {
-				sc.next();
-			}
-			input = sc.nextInt();
-		} while (input < 0);
-		
-		return input;
 	}
 }

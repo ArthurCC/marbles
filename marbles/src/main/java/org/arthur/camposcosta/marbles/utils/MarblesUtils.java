@@ -9,8 +9,8 @@ public class MarblesUtils {
 	
 	/**
 	 * Sum up all the different combinations between two boxes
-	 * @param currentBoxCount > 0
-	 * @param comparedBoxCount > 0
+	 * @param currentBoxCount superior than 0
+	 * @param comparedBoxCount superior than 0
 	 * @return the sum of all different combinations
 	 */
 	public static int getCountCurrentBoxes(int currentBoxCount, int comparedBoxCount) {
