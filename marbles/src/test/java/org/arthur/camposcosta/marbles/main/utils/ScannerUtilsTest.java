@@ -1,3 +1,4 @@
+package org.arthur.camposcosta.marbles.main.utils;
 import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayInputStream;
