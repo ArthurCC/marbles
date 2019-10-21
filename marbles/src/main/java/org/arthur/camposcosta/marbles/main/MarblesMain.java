@@ -2,7 +2,9 @@ package org.arthur.camposcosta.marbles.main;
 
 import java.util.Scanner;
 
-import org.arthur.camposcosta.marbles.utils.MarblesUtils;
+import org.arthur.camposcosta.marbles.service.MarblesCountService;
+import org.arthur.camposcosta.marbles.service.impl.MarblesCountServiceImpl;
+import org.arthur.camposcosta.marbles.service.impl.MarblesCountServiceJava8Impl;
 
 /**
  * Main class of the application that runs the main method
@@ -25,9 +27,13 @@ public class MarblesMain {
 		// Close the scanner
 		sc.close();
 		
+		// Instanciation of count services
+		MarblesCountService countService = new MarblesCountServiceImpl();
+		MarblesCountService countServiceJava8 = new MarblesCountServiceJava8Impl();
+		
 		// Print result
-		System.out.println("Number of alternative : " + MarblesUtils.getNumberAlternative(marbleBoxes));
-		System.out.print("Number of alternative using Java 8 streams : " + MarblesUtils.getNumberAlternativeStream(marbleBoxes));
+		System.out.println("Number of alternative : " + countService.getNumberAlternatives(marbleBoxes));
+		System.out.print("Number of alternative using Java 8 streams : " + countServiceJava8.getNumberAlternatives(marbleBoxes));
 	}
 	
 	/**
