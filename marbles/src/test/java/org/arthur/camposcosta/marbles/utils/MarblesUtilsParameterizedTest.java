@@ -12,7 +12,6 @@ import org.junit.runners.Parameterized.Parameters;
 
 /**
  * Parameterized test class for the class MarbleUtils
- * This class is used for test that can be Parameterized as simple test (input, result)
  * @author Arthur
  *
  */
@@ -20,105 +19,102 @@ import org.junit.runners.Parameterized.Parameters;
 public class MarblesUtilsParameterizedTest {
 	
 	/**
-	 * input as the marble boxes array that we want to test
+	 * count for the current boxCount
 	 */
-	private int[] marbleBoxes;
+	private int currentBoxCount;
+	
+	/**
+	 * count for the compared boxCount
+	 */
+	private int comparedBoxCount;
 	
 	/**
 	 * expected result as the count of alternative marbles
 	 */
 	private int count;
-	
+
 	/**
 	 * Constructor of the class
-	 * @param marbleBoxes
-	 * @param count
+	 * @param currentBoxCount
+	 * @param comparedBoxCount
 	 */
-	public MarblesUtilsParameterizedTest(int[] marbleBoxes, int count) {
-		this.marbleBoxes = marbleBoxes;
+	public MarblesUtilsParameterizedTest(int currentBoxCount, int comparedBoxCount, int count) {
+		this.currentBoxCount = currentBoxCount;
+		this.comparedBoxCount = comparedBoxCount;
 		this.count = count;
 	}
 	
 	/**
-	 * Parameters as {input, expected_result}
-	 * @return
+	 * Parameters as {input1, input2, expected_result}
+	 * 
+	 * We don't test argument value = 0 because it has already been tested in the service method
+	 * for MarblesCountService. We are not supposed to have value = 0 at this stage
+	 * @return the collection of test case
 	 */
 	@Parameters
 	public static Collection<Object[]> data() {
 		return Arrays.asList(new Object[][] {
 			/**
-			 * Test for no box
-			 * Alternative should be 0 as there's no box
+			 * Test with one marble each
+			 * sum = 0
 			 */
-			{new int[] {}, 0},
+			{1, 1, 0},
 			
 			/**
-			 * Test for one box
-			 * Alternative should be 0 as we cannot pick 2 marbles from same box
+			 * Test with box 1 = 1, box 2 = 2
+			 * sum = 1
 			 */
-			{new int[] {3}, 0},
+			{1, 2, 1},
 			
 			/**
-			 * Test for one empty box
-			 * Alternative should be 0 as the box is Empty
+			 * Test with box 1 = 2, box 2 = 1
+			 * sum = 1
 			 */
-			{new int[] {0}, 0},
+			{2, 1, 1},
 			
 			/**
-			 * Test for multiple empty box
-			 * Alternative should be 0 as boxes are Empty
+			 * Test with box 1 = 2, box 2 = 2
+			 * sum = 2
 			 */
-			{new int[] {0, 0, 0}, 0},
+			{2, 2, 2},
 			
 			/**
-			 * Test for two boxes with first empty
-			 * Alternative should be 0 as one box is empty
+			 * Test with box 1 = 2, box 2 = 3
+			 * sum = 4
 			 */
-			{new int[] {0, 2}, 0},
+			{2, 3, 4},
 			
 			/**
-			 * Test for two boxes with second empty
-			 * Alternative should be 0 as one box is empty
+			 * Test with box 1 = 3, box 2 = 2
+			 * sum = 4
 			 */
-			{new int[] {2, 0}, 0},
+			{3, 2, 4},
 			
 			/**
-			 * Test for multiple boxes with one element in each
-			 * Alternative should be 0 as there is only one marble in each box
+			 * Test with box 1 = 3, box 2 = 3
+			 * sum = 6
 			 */
-			{new int[] {1, 1, 1}, 0},
+			{3, 3, 6},
 			
 			/**
-			 * Test for two boxes with random numbers
-			 * box 1 = 2, box 2 = 3 Alternative should be 4 (1,2) (1,3) (2,1) (2,3)
+			 * Test with box 1 = 3, box 2 = 4
+			 * sum = 9
 			 */
-			{new int[] {2, 3}, 4},
+			{3, 4, 9},
 			
 			/**
-			 * Test for two boxes with first box having one marble
-			 * box 1 = 2, box 2 = 1 Alternative should be 1 (1,2)
+			 * Test with box 1 = 4, box 2 = 3
+			 * sum = 9
 			 */
-			{new int[] {1, 2}, 1},
-			
-			/**
-			 * Test for two boxes with second box having one marble
-			 * box 1 = 2, box 2 = 1 Alternative should be 1 (2,1)
-			 */
-			{new int[] {2, 1}, 1}
+			{4, 3, 9}
 		});
 	}
 	
 	/**
-	 * Test of the method getNumberAlternative
-	 * @throws MarblesIllegalCountException
+	 * Test for the method getCountCurrentBoxes
 	 */
 	@Test
-	public void testGetNumberAlternative() {
-		assertEquals(count, MarblesUtils.getNumberAlternative(marbleBoxes));
-	}
-	
-	@Test
-	public void testGetNumberAlternativeStream() {
-		assertEquals(count, MarblesUtils.getNumberAlternativeStream(marbleBoxes));
+	public void testGetCountCurrentBoxes() {
+		assertEquals(count, MarblesUtils.getCountCurrentBoxes(currentBoxCount, comparedBoxCount));
 	}
 }
